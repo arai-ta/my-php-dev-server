@@ -46,6 +46,7 @@ Vagrant.configure("2") do |config|
     # install system php
     yum install -y --enablerepo=remi,remi-php56 \
       php php-devel php-mbstring php-pdo php-gd php-xml php-pear php-mysql
+    ln -sv /vagrant/asset/user.php.ini /etc/php.d/
 
   SCRIPT
 end
