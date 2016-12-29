@@ -37,6 +37,17 @@ Vagrant.configure("2") do |config|
     yum install -y epel-release
     rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
   SCRIPT
+
+  # Middleware
+  config.vm.provision "Middleware", type:"shell", inline: <<-SCRIPT
+    # perm
+    umask 0000
+
+    # install system php
+    yum install -y --enablerepo=remi,remi-php56 \
+      php php-devel php-mbstring php-pdo php-gd php-xml php-pear php-mysql
+
+  SCRIPT
 end
 
 
