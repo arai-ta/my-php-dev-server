@@ -48,6 +48,18 @@ Vagrant.configure("2") do |config|
       php php-devel php-mbstring php-pdo php-gd php-xml php-pear php-mysql
     ln -sv /vagrant/asset/user.php.ini /etc/php.d/
 
+    # tools
+    yum install -y git telnet wget patch
+
+    # anyenv + phpenv
+    git clone https://github.com/riywo/anyenv /anyenv
+    ln -sv /vagrant/asset/anyenv.profile.sh /etc/profile.d/
+    . /etc/profile.d/anyenv.profile.sh
+    anyenv install phpenv
+    chmod a+w -R /anyenv
+
+    
+
   SCRIPT
 end
 
