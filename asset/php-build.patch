@@ -1,0 +1,12 @@
+@@ -347,6 +347,11 @@
+ 
+     cd "$source_path"
+     {
++        if which apxs > /dev/null 2>&1; then
++            _LIBEXECDIR=`apxs -q LIBEXECDIR`
++            sed -i"" -e "s|LIBEXECDIR='\$(INSTALL_ROOT)$_LIBEXECDIR'|LIBEXECDIR=$PREFIX/libexec|" $TMP/source/$DEFINITION/Makefile
++        fi
++
+         make $PHP_BUILD_EXTRA_MAKE_ARGUMENTS
+         make install
+         if [ "$PHP_BUILD_KEEP_OBJECT_FILES" == "off" ]; then

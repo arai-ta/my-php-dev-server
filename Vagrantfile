@@ -54,12 +54,52 @@ Vagrant.configure("2") do |config|
     # anyenv + phpenv
     git clone https://github.com/riywo/anyenv /anyenv
     ln -sv /vagrant/asset/anyenv.profile.sh /etc/profile.d/
+    ## phpenv
     . /etc/profile.d/anyenv.profile.sh
     anyenv install phpenv
+    ## php-build patch
+    ## see: http://tkuchiki.hatenablog.com/entry/2014/04/08/210022
+    patch /anyenv/envs/phpenv/plugins/php-build/bin/php-build \
+      < /vagrant/asset/php-build.patch
+    ## pecl plugin + patch
+    ## see: https://github.com/crocos/pecl-build/pull/4
+    git clone https://github.com/crocos/pecl-build.git \
+      /anyenv/envs/phpenv/plugins/pecl-build
+    sed -i -e 's/Content-disposition/-i Content-Disposition/i' \
+      /anyenv/envs/phpenv/plugins/pecl-build/bin/pecl-build
     chmod a+w -R /anyenv
 
-    
+    # php
+    yum install -y gcc re2c libxml2 libxml2-devel libcurl libcurl-devel \
+        libjpeg-devel openssl-devel libpng-devel libmcrypt libmcrypt-devel \
+        readline-devel libtidy libtidy-devel libxslt libxslt-devel \
+        libtool-ltdl libtool-ltdl-devel freetype freetype-devel \
+        ImageMagick ImageMagick-devel httpd-devel
+    . /etc/profile.d/anyenv.profile.sh
+    phpenv install 5.3.29
+    #phpenv install 5.4.45
+    #phpenv install 5.5.38
+    #phpenv install 5.6.28
+    # pecl extension
+    TEST_PHP_ARGS=-q phpenv pecl imagick -a
+    # php.ini
+    find /anyenv/envs/phpenv/versions -name conf.d | xargs -I{} \
+      ln -sv /vagrant/asset/user.php.ini {}
+    chmod a+w -R /anyenv
 
+    # mysql
+    yum -y install mysql-server
+    sed -i -e '6a character-set-server = utf8' \
+           -e 's|^log-error.*$|log-error=/vagrant/log/mysqld.log|' \
+           /etc/my.cnf
+
+    # daemons
+    chkconfig iptables  off
+    chkconfig ip6tables off
+    chkconfig httpd  on
+    chkconfig mysqld on
+    service start httpd
+    service start mysqld
   SCRIPT
 end
 
