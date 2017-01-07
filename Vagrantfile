@@ -90,6 +90,9 @@ Vagrant.configure("2") do |config|
     # install php.ini
     sh /vagrant/bin/install_php_ini.sh
 
+    # httpd
+    ln -sv user.httpd.conf /etc/httpd/conf.d
+
     # mysql
     yum -y install mysql-server
     sed -i -e '6a character-set-server = utf8' \
