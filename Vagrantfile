@@ -46,7 +46,6 @@ Vagrant.configure("2") do |config|
     # install system php
     yum install -y --enablerepo=remi,remi-php56 \
       php php-devel php-mbstring php-pdo php-gd php-xml php-pear php-mysql
-    ln -sv /vagrant/asset/user.php.ini /etc/php.d/
 
     # tools
     yum install -y git telnet wget patch
@@ -86,10 +85,10 @@ Vagrant.configure("2") do |config|
     #phpenv install 5.6.28
     # pecl extension
     TEST_PHP_ARGS=-q phpenv pecl imagick -a
-    # php.ini
-    find /anyenv/envs/phpenv/versions -name conf.d | xargs -I{} \
-      ln -sv /vagrant/asset/user.php.ini {}
     chmod a+w -R /anyenv
+
+    # install php.ini
+    sh /vagrant/bin/install_php_ini.sh
 
     # mysql
     yum -y install mysql-server
