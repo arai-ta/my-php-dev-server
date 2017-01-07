@@ -67,6 +67,10 @@ Vagrant.configure("2") do |config|
       /anyenv/envs/phpenv/plugins/pecl-build
     sed -i -e 's/Content-disposition/-i Content-Disposition/i' \
       /anyenv/envs/phpenv/plugins/pecl-build/bin/pecl-build
+    ## set configure option
+    rm /anyenv/envs/phpenv/plugins/php-build/share/php-build/default_configure_options
+    ln -sv /vagrant/asset/php-configure-option.txt \
+      /anyenv/envs/phpenv/plugins/php-build/share/php-build/default_configure_options
     chmod a+w -R /anyenv
 
     # php
