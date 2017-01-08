@@ -29,15 +29,19 @@ add php version:
     [vagrant@my-php-dev-server ~]$ sh /vagrant/bin/change_libphp5.sh
 
 
-Requirement / Depends
-----------------------
+Requirement
+-----------------
 
-* [Remi's RPM repository](http://rpms.famillecollet.com)
 * [VirtualBox](https://www.virtualbox.org)
 * [Vagrant](https://www.vagrantup.com)
+
+
+Depends
+-----------------
+
+* [Remi's RPM repository](http://rpms.famillecollet.com)
 * [Bento](https://atlas.hashicorp.com/bento)
 * [anyenv](https://github.com/riywo/anyenv)
 * [phpenv](https://github.com/madumlao/phpenv)
-* [php-build](https://github.com/php-build/php-build)
 * [pecl-build](https://github.com/crocos/pecl-build)
 
