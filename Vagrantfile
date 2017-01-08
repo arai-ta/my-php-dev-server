@@ -91,6 +91,7 @@ Vagrant.configure("2") do |config|
     sh /vagrant/bin/install_php_ini.sh
 
     # httpd
+    sed -i -e 's/\(^.*php5.*$\)/#\1/' /etc/httpd/conf/httpd.conf
     ln -sv /vagrant/asset/user.httpd.conf /etc/httpd/conf.d
 
     # mysql
