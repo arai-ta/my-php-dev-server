@@ -104,8 +104,8 @@ Vagrant.configure("2") do |config|
     chkconfig ip6tables off
     chkconfig httpd  on
     chkconfig mysqld on
-    service start httpd
-    service start mysqld
+    service httpd  start
+    service mysqld start
   SCRIPT
 end
 
