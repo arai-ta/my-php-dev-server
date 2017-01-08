@@ -111,6 +111,11 @@ Vagrant.configure("2") do |config|
     service httpd  start
     service mysqld start
   SCRIPT
+
+  config.vm.provision "Daemon", run: "always", type: "shell", inline: <<-SCRIPT
+    service httpd  restart
+    service mysqld restart
+  SCRIPT
 end
 
 
