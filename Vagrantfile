@@ -87,6 +87,9 @@ Vagrant.configure("2") do |config|
     TEST_PHP_ARGS=-q phpenv pecl imagick -a
     chmod a+w -R /anyenv
 
+    # test script
+    echo '<?php phpinfo();' > /var/www/html/index.php
+
     # install php.ini
     sh /vagrant/bin/install_php_ini.sh
 
